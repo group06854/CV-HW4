@@ -1,0 +1,52 @@
+# КОНФИГУРАЦИЯ НАСТОЯЩЕГО GAUSSIAN SPLATTING RENDERER
+
+# Настройки исследования сцены
+exploration:
+  strategy: "random"           # voxel, random, frontier
+  voxel_size: 1.5             # размер вокселя в метрах
+  max_waypoints: 10           # максимальное количество точек
+  safety_margin: 0.3          # запас безопасности от препятствий
+
+# Настройки планирования пути  
+path_planning:
+  interpolation: "linear"      # linear, cubic, bezier
+  speed: 0.5                 # скорость камеры
+  smoothness: 0.1            # сглаживание пути (0-1)
+  obstacle_threshold: 0.8     # порог обнаружения препятствий
+  min_path_points: 10         # минимальное количество точек пути
+  max_frames: 900 
+
+# Настройки рендеринга
+rendering:
+  resolution: [1280, 720]     # разрешение видео
+  fps: 30                     # кадров в секунду
+  video_duration: 4          # длительность видео в секундах
+  output_format: "mp4"        # формат выходного файла
+  quality: "high"             # качество рендеринга
+
+# Настройки obstacle detection
+obstacle_detection:
+  grid_resolution: 2.0       # разрешение сетки для obstacle map
+  density_threshold: 10       # порог плотности для препятствий
+  smoothing_iterations: 2     # итерации сглаживания карты
+  safety_check_distance: 1.0  # дистанция проверки безопасности
+
+# Опциональные модули (бонусные части)
+optional:
+  enable_object_detection: true      # детекция объектов
+  enable_semantic_navigation: false  # семантическая навигация
+  enable_depth_effects: false        # эффекты глубины
+  enable_audio: false                # добавление звука
+
+# Настройки GS рендерера
+gaussian_splatting:
+  render_engine: "auto"       # auto, sibr, web, demo
+  sh_degree: 3                # степень шаровых гармоник
+  background_color: [0, 0, 0] # цвет фона
+  tonemapping: "gamma"        # тонмаппинг: gamma, reinhard, none
+
+# Настройки производительности
+performance:
+  use_gpu: true               # использование GPU если доступно
+  batch_size: 50000           # размер батча для рендеринга
+  max_memory_usage: 4096      # максимальное использование памяти в MB

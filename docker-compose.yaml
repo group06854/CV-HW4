@@ -1,0 +1,33 @@
+x-common: &common
+  build:
+    context: .
+    dockerfile: Dockerfile
+  working_dir: /app
+  volumes:
+    - ./:/app
+  # Для Windows с WSL2 - GPU через WSL2
+  deploy:
+    resources:
+      reservations:
+        devices:
+          - driver: nvidia
+            count: all
+            capabilities: [gpu]
+  environment:
+    - NVIDIA_VISIBLE_DEVICES=all
+    # фолбэк для Open3D: OSMesa CPU
+    - OPEN3D_RENDERING_BACKEND=OSMESA
+    - LIBGL_ALWAYS_SOFTWARE=1
+    - MESA_LOADER_DRIVER_OVERRIDE=llvmpipe
+    - EGL_PLATFORM=surfaceless
+
+services:
+  app:
+    <<: *common
+    command: ["cmd", "/C", "echo", "Windows-compatible command"]
+
+  terminal:
+    <<: *common
+    stdin_open: true
+    tty: true
+    command: ["powershell.exe"]
